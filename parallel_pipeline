@@ -1,0 +1,41 @@
+pipeline {
+    agent none
+    tools
+    {
+        maven 'DEFAULT'
+    }
+    stages {
+        stage('parrel stage') {
+            parallel {
+                stage('BUILD on master server') {
+                    agent {
+                        label "master"
+                    }
+                    steps {
+                        git 'https://github.com/keshavr21/maven_test.git'
+                        sh 'mvn clean package'
+                    }
+                    post {
+                        always {
+                            echo 'I will always get executed on master'
+                        }
+                    }
+                }
+                stage('build on slave server') {
+                    agent {
+                        label "tom"
+                    }
+                    steps {
+                        git 'https://github.com/keshavr21/dependency_managment.git'
+                        sh 'mvn clean package'
+                    }
+                    post {
+                        always {
+                             echo 'I will always get executed on tom server'
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
