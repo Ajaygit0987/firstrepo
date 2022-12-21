@@ -21,7 +21,7 @@ pipeline {
         }
         stage('continous deploy'){
             steps{
-             deploy adapters: [tomcat9(credentialsId: 'tom', path: '', url: 'http://54.81.114.86:8080')], contextPath: 'deploy', war: '**/*.war'   
+             deploy adapters: [tomcat9(credentialsId: 'tom', path: '', url: 'http://34.229.155.58:8080')], contextPath: 'deploy', war: '**/*.war'   
             }
             
         }
@@ -35,7 +35,7 @@ pipeline {
          stage('continous delivery'){
             steps{
                 input message: 'WAITING FOR APPROVAL', submitter: 'admin,abcd'
-             sh 'scp /var/lib/jenkins/workspace/declarative_pipeline/target/*.war root@54.81.114.86:/usr/share/tomcat/webapps/deploy.war'
+             sh 'scp /var/lib/jenkins/workspace/declarative_pipeline/target/*.war root@34.229.155.58:/usr/share/tomcat/webapps/deploy.war'
             }
             
         }
@@ -45,6 +45,7 @@ pipeline {
         success
         {
             sh 'echo "build sucess"'
+            
         }
         
         failure
