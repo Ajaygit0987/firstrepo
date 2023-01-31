@@ -10,6 +10,5 @@
       vars:
         packages:
           - httpd
-          - extras
           - vsftpd
           - php
